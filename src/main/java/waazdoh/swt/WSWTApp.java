@@ -9,4 +9,8 @@ public interface WSWTApp {
 
 	MPreferences getPreferences();
 
+	void close();
+
+	void openWindow();
+
 }
