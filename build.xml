@@ -1,0 +1,34 @@
+<project>
+	<import file="ant.xml" />
+
+	<property name="projectname" value="waazdoh-swt" />
+	<property name="staging.dir" value="target/staging" />
+
+
+	<target name="swtt.check.uptodate">
+		<uptodate property="swtt.notrequired" targetfile="target/build.trig">
+   			<srcfiles dir="src/" >
+   			    <include name="*.sh"/>
+   			    <include name="**/*.lst"/>
+   			    <include name="**/*.java"/>
+   				<include name="*.properties"/>   			    
+   			</srcfiles>
+			<srcfiles dir="./" includes="*.xml" excludes="target" />
+		</uptodate>
+
+	</target>
+
+	<target name="deploy" unless="swtt.notrequired">
+		<echo file="target/build.trig">Done</echo>
+
+		<ant target="runmvn">
+			<property name="args" value="install" />
+		</ant>
+
+		<echo>Done</echo>
+	</target>
+	
+	<target name="build" depends="swtt.check.uptodate, deploy">
+		<echo>Done</echo>
+	</target>	
+</project>

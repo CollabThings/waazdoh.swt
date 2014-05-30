@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry including="**/*.java" kind="src" path="src/main/java"/>
+	<classpathentry excluding="**/*.java" kind="src" path="src/main/resources"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="var" path="M2_REPO/junit/junit/4.8.1/junit-4.8.1.jar"/>
+	<classpathentry kind="src" path="/waazdoh.client"/>
+	<classpathentry kind="var" path="M2_REPO/commons-httpclient/commons-httpclient/3.1/commons-httpclient-3.1.jar"/>
+	<classpathentry kind="var" path="M2_REPO/commons-logging/commons-logging/1.0.4/commons-logging-1.0.4.jar"/>
+	<classpathentry kind="var" path="M2_REPO/commons-codec/commons-codec/1.2/commons-codec-1.2.jar"/>
+	<classpathentry kind="var" path="M2_REPO/com/jcraft/jzlib/1.1.2/jzlib-1.1.2.jar"/>
+	<classpathentry kind="var" path="M2_REPO/io/netty/netty-all/4.0.9.Final/netty-all-4.0.9.Final.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/eclipse/swt/org.eclipse.swt.win32.win32.x86_64/4.3/org.eclipse.swt.win32.win32.x86_64-4.3.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/eclipse/jface/org.eclipse.jface/3.8.0.v20120521-2329/org.eclipse.jface-3.8.0.v20120521-2329.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/eclipse/equinox/org.eclipse.equinox.common/3.6.100.v20120522-1841/org.eclipse.equinox.common-3.6.100.v20120522-1841.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/eclipse/core/org.eclipse.core.commands/3.6.1.v20120521-2329/org.eclipse.core.commands-3.6.1.v20120521-2329.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/eclipse/osgi/org.eclipse.osgi/3.8.0.v20120529-1548/org.eclipse.osgi-3.8.0.v20120529-1548.jar"/>
+	<classpathentry kind="lib" path="C:/Users/vilmunju/kehitys/Java/jdk1.8.0_05_64/jre/lib/jfxswt.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
