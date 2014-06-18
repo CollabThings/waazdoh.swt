@@ -43,7 +43,7 @@ public class WSWTAppLauncher {
 			l = ProxySelector.getDefault()
 					.select(new URI("http://waazdoh.com"));
 		} catch (URISyntaxException e) {
-			e.printStackTrace();
+			log.error(e);
 		}
 		if (l != null) {
 			for (Iterator iter = l.iterator(); iter.hasNext();) {
