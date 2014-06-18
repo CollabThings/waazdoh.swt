@@ -1,7 +1,7 @@
 package waazdoh.swt;
 
 import waazdoh.client.WClient;
-import waazdoh.cutils.MPreferences;
+import waazdoh.util.MPreferences;
 
 public interface WSWTApp {
 

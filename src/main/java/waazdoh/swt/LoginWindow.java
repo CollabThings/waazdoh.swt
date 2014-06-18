@@ -13,8 +13,8 @@ import org.eclipse.swt.widgets.Monitor;
 import org.eclipse.swt.widgets.Shell;
 
 import waazdoh.client.WClientAppLogin;
-import waazdoh.cutils.MLogger;
-import waazdoh.cutils.MPreferences;
+import waazdoh.util.MLogger;
+import waazdoh.util.MPreferences;
 
 public class LoginWindow {
 
@@ -117,10 +117,10 @@ public class LoginWindow {
 			@Override
 			public void run() {
 				if (!loginWithStored()) {
-					String sessionId = getApplogin().getSessionId();
 					synchronized (app) {
 						try {
-							while (sessionId == null && !shell.isDisposed()) {
+							while (getApplogin().getSessionId() == null
+									&& !shell.isDisposed()) {
 								applogin = app.getClient().checkAppLogin(
 										getApplogin().getId());
 								app.wait(2000);
@@ -130,11 +130,10 @@ public class LoginWindow {
 						}
 					}
 
-					app.getClient().setSession(sessionId);
-					boolean b = app.getClient().setSession(sessionId);
-					if (b) {
+					if (app.getClient().getService().isLoggedIn()) {
 						app.getPreferences().set(
-								MPreferences.PREFERENCES_SESSION, sessionId);
+								MPreferences.PREFERENCES_SESSION,
+								applogin.getSessionId());
 					}
 				}
 				//
@@ -157,11 +156,13 @@ public class LoginWindow {
 	}
 
 	public void dispose() {
-		shell.getDisplay().asyncExec(new Runnable() {
-			public void run() {
-				shell.dispose();
-			}
-		});
+		if (!shell.isDisposed()) {
+			shell.getDisplay().asyncExec(new Runnable() {
+				public void run() {
+					shell.dispose();
+				}
+			});
+		}
 	}
 
 	public WClientAppLogin getApplogin() {
