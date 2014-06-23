@@ -126,7 +126,7 @@ public class LoginWindow {
 								app.wait(2000);
 							}
 						} catch (InterruptedException e) {
-							e.printStackTrace();
+							log.error(e);
 						}
 					}
 
