@@ -112,33 +112,29 @@ public class LoginWindow {
 	}
 
 	private void startLoginCheck() {
-		final Thread t = new Thread(new Runnable() {
-
-			@Override
-			public void run() {
-				if (!loginWithStored()) {
-					synchronized (app) {
-						try {
-							while (getApplogin().getSessionId() == null
-									&& !shell.isDisposed()) {
-								applogin = app.getClient().checkAppLogin(
-										getApplogin().getId());
-								app.wait(2000);
-							}
-						} catch (InterruptedException e) {
-							log.error(e);
+		final Thread t = new Thread(() -> {
+			if (!loginWithStored()) {
+				synchronized (app) {
+					try {
+						while (getApplogin().getSessionId() == null
+								&& !shell.isDisposed()) {
+							applogin = app.getClient().checkAppLogin(
+									getApplogin().getId());
+							app.wait(2000);
 						}
-					}
-
-					if (app.getClient().getService().isLoggedIn()) {
-						app.getPreferences().set(
-								MPreferences.PREFERENCES_SESSION,
-								applogin.getSessionId());
+					} catch (InterruptedException e) {
+						log.error(e);
 					}
 				}
-				//
-				dispose();
+
+				if (app.getClient().getService().isLoggedIn()) {
+					app.getPreferences().set(
+							MPreferences.PREFERENCES_SESSION,
+							applogin.getSessionId());
+				}
 			}
+			//
+			dispose();
 		});
 		t.start();
 	}
