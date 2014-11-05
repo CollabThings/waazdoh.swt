@@ -1,29 +1,35 @@
 package waazdoh.swt;
 
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Monitor;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 
+import waazdoh.client.WClient;
 import waazdoh.client.WClientAppLogin;
 import waazdoh.util.MLogger;
-import waazdoh.util.MPreferences;
+import waazdoh.util.MStringID;
 
 public class LoginWindow {
-
 	protected Shell shell;
 	private WSWTApp app;
 	private WClientAppLogin applogin;
 	private MLogger log = MLogger.getLogger(this);
 	private Link link;
-	private Browser browser;
+	private Text text;
 
 	public LoginWindow(WSWTApp app) {
 		this.app = app;
@@ -63,7 +69,7 @@ public class LoginWindow {
 		shell = new Shell();
 		int w = 497;
 		int h = 329;
-		shell.setSize(w, h);
+		shell.setSize(430, 196);
 		shell.setText("Login");
 
 		Monitor primary = shell.getDisplay().getPrimaryMonitor();
@@ -76,6 +82,10 @@ public class LoginWindow {
 		shell.setLocation(x, y);
 		shell.setLayout(new GridLayout(1, false));
 
+		Label lblTitle = new Label(shell, SWT.NONE);
+		lblTitle.setAlignment(SWT.CENTER);
+		lblTitle.setText("Click the link or copy URL to accept application");
+
 		link = new Link(shell, SWT.NONE);
 		link.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -85,8 +95,11 @@ public class LoginWindow {
 		});
 		link.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		link.setText("Working on it...");
-		browser = new Browser(shell, SWT.NONE);
-		browser.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+
+		text = new Text(shell, SWT.BORDER | SWT.MULTI);
+		GridData gd_text = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
+		gd_text.heightHint = 102;
+		text.setLayoutData(gd_text);
 		//
 		startLoginCheck();
 		waitForLogin();
@@ -113,42 +126,25 @@ public class LoginWindow {
 
 	private void startLoginCheck() {
 		final Thread t = new Thread(() -> {
-			if (!loginWithStored()) {
+			if (!app.getClient().trySavedSession()) {
+				WClient client = app.getClient();
 				synchronized (app) {
 					try {
 						while (getApplogin().getSessionId() == null
 								&& !shell.isDisposed()) {
-							applogin = app.getClient().checkAppLogin(
-									getApplogin().getId());
+							MStringID id = getApplogin().getId();
+							applogin = client.checkAppLogin(id);
 							app.wait(2000);
 						}
 					} catch (InterruptedException e) {
 						log.error(e);
 					}
 				}
-
-				if (app.getClient().getService().isLoggedIn()) {
-					app.getPreferences().set(
-							MPreferences.PREFERENCES_SESSION,
-							applogin.getSessionId());
-				}
 			}
 			//
-			dispose();
-		});
+				dispose();
+			});
 		t.start();
-	}
-
-	public boolean loginWithStored() {
-		String session = app.getPreferences().get(
-				MPreferences.PREFERENCES_SESSION, "unknown_session");
-
-		try {
-			return app.getClient().setSession(session);
-		} catch (Exception e) {
-			log.info("failed at login " + e);
-			return false;
-		}
 	}
 
 	public void dispose() {
@@ -173,7 +169,13 @@ public class LoginWindow {
 
 					String url = "" + getURL() + "?simplepage=true";
 					log.info("opening url " + url);
-					browser.setUrl(url);
+					text.setText(url);
+					//
+					try {
+						Desktop.getDesktop().browse(new URI(url));
+					} catch (IOException | URISyntaxException e) {
+						log.error(e);
+					}
 				}
 			});
 		}
