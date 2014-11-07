@@ -159,6 +159,8 @@ public class LoginWindow {
 
 	public WClientAppLogin getApplogin() {
 		if (applogin == null) {
+			log.info("creating applogin " + app);
+			log.info("client:" + app.getClient());
 			this.applogin = app.getClient().requestAppLogin();
 			shell.getDisplay().asyncExec(new Runnable() {
 
@@ -174,6 +176,7 @@ public class LoginWindow {
 					try {
 						Desktop.getDesktop().browse(new URI(url));
 					} catch (IOException | URISyntaxException e) {
+						log.error("getAppLogin failed to open browser " + url);
 						log.error(e);
 					}
 				}
