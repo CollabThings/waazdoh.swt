@@ -139,8 +139,8 @@ public class LoginWindow {
 	}
 
 	private void loop(WClient client) {
-		while (!shell.isDisposed() && applogin == null
-				&& applogin.getSessionId() == null) {
+		while (!shell.isDisposed()
+				&& (applogin == null || applogin.getSessionId() == null)) {
 			try {
 				MStringID id = getApplogin().getId();
 				applogin = client.checkAppLogin(id);
