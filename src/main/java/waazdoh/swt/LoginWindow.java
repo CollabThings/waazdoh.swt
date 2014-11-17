@@ -129,22 +129,37 @@ public class LoginWindow {
 			if (!app.getClient().trySavedSession()) {
 				WClient client = app.getClient();
 				synchronized (app) {
-					try {
-						while (getApplogin().getSessionId() == null
-								&& !shell.isDisposed()) {
-							MStringID id = getApplogin().getId();
-							applogin = client.checkAppLogin(id);
-							app.wait(2000);
-						}
-					} catch (InterruptedException e) {
-						log.error(e);
-					}
+					loop(client);
 				}
 			}
 			//
 				dispose();
 			});
 		t.start();
+	}
+
+	private void loop(WClient client) {
+		while (!shell.isDisposed() && applogin == null
+				&& applogin.getSessionId() == null) {
+			try {
+				MStringID id = getApplogin().getId();
+				applogin = client.checkAppLogin(id);
+				waitApp();
+			} catch (Exception e) {
+				log.error(e);
+				waitApp();
+			}
+		}
+	}
+
+	private void waitApp() {
+		synchronized (app) {
+			try {
+				app.wait(2000);
+			} catch (InterruptedException e) {
+				log.error(e);
+			}
+		}
 	}
 
 	public void dispose() {
