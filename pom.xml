@@ -193,7 +193,7 @@
 		<dependency>
 			<groupId>waazdoh</groupId>
 			<artifactId>waazdoh.client</artifactId>
-			<version>[1.1.5,)</version>
+			<version>[1.4.6-SNAPSHOT,)</version>
 		</dependency>
 
 		<dependency>

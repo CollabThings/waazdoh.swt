@@ -1,6 +1,7 @@
 package waazdoh.swt;
 
 import java.net.InetSocketAddress;
+import java.net.Proxy;
 import java.net.ProxySelector;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -11,7 +12,6 @@ import waazdoh.util.MLogger;
 
 public class WSWTAppLauncher {
 
-	private WSWTApp app;
 	private LoginWindow loginwindow;
 	private MLogger log = MLogger.getLogger(this);
 
@@ -20,7 +20,6 @@ public class WSWTAppLauncher {
 	}
 
 	public void launch(WSWTApp app) {
-		this.app = app;
 		try {
 			loginwindow = new LoginWindow(app);
 			loginwindow.open();
@@ -38,7 +37,7 @@ public class WSWTAppLauncher {
 	private void setProxy() {
 		System.setProperty("java.net.useSystemProxies", "true");
 		log.info("detecting proxies");
-		List l = null;
+		List<Proxy> l = null;
 		try {
 			l = ProxySelector.getDefault()
 					.select(new URI("http://waazdoh.com"));
@@ -46,8 +45,8 @@ public class WSWTAppLauncher {
 			log.error(e);
 		}
 		if (l != null) {
-			for (Iterator iter = l.iterator(); iter.hasNext();) {
-				java.net.Proxy proxy = (java.net.Proxy) iter.next();
+			for (Iterator<Proxy> iter = l.iterator(); iter.hasNext();) {
+				Proxy proxy = iter.next();
 				log.info("proxy hostname : " + proxy.type());
 
 				InetSocketAddress addr = (InetSocketAddress) proxy.address();
