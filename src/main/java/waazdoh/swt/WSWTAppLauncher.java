@@ -8,12 +8,12 @@ import java.net.URISyntaxException;
 import java.util.Iterator;
 import java.util.List;
 
-import waazdoh.util.MLogger;
+import waazdoh.common.WLogger;
 
 public class WSWTAppLauncher {
 
 	private LoginWindow loginwindow;
-	private MLogger log = MLogger.getLogger(this);
+	private WLogger log = WLogger.getLogger(this);
 
 	public WSWTAppLauncher() {
 		setProxy();

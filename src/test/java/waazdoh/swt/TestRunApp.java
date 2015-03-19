@@ -5,20 +5,20 @@ import junit.framework.TestCase;
 import org.xml.sax.SAXException;
 
 import waazdoh.client.WClient;
+import waazdoh.common.AppPreferences;
+import waazdoh.common.MTimedFlag;
+import waazdoh.common.WPreferences;
 import waazdoh.testing.MockBeanStorage;
 import waazdoh.testing.ServiceMock;
 import waazdoh.testing.StaticTestPreferences;
 import waazdoh.testing.TestPBinarySource;
-import waazdoh.util.AppPreferences;
-import waazdoh.util.MPreferences;
-import waazdoh.util.MTimedFlag;
 
 public class TestRunApp extends TestCase {
 
 	public void testLaunch() throws SAXException {
 		String prefix = "testrunappswt";
 		String username = prefix + System.currentTimeMillis();
-		MPreferences p = new StaticTestPreferences(prefix, username + "@ewew");
+		WPreferences p = new StaticTestPreferences(prefix, username + "@ewew");
 		TestPBinarySource bsource = new TestPBinarySource(p);
 		ServiceMock nservice = new ServiceMock(username, bsource);
 
@@ -29,7 +29,7 @@ public class TestRunApp extends TestCase {
 
 		WSWTAppLauncher w = new WSWTAppLauncher();
 		WSWTApp app = new WSWTApp() {
-			MPreferences p = new AppPreferences();
+			WPreferences p = new AppPreferences();
 
 			@Override
 			public void openWindow() {
@@ -37,7 +37,7 @@ public class TestRunApp extends TestCase {
 			}
 
 			@Override
-			public MPreferences getPreferences() {
+			public WPreferences getPreferences() {
 				return p;
 			}
 

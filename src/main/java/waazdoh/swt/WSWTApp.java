@@ -1,13 +1,13 @@
 package waazdoh.swt;
 
 import waazdoh.client.WClient;
-import waazdoh.util.MPreferences;
+import waazdoh.common.WPreferences;
 
 public interface WSWTApp {
 
 	WClient getClient();
 
-	MPreferences getPreferences();
+	WPreferences getPreferences();
 
 	void close();
 

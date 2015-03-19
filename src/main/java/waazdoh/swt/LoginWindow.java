@@ -20,14 +20,14 @@ import org.eclipse.swt.widgets.Text;
 
 import waazdoh.client.WClient;
 import waazdoh.client.WClientAppLogin;
-import waazdoh.util.MLogger;
-import waazdoh.util.MStringID;
+import waazdoh.common.MStringID;
+import waazdoh.common.WLogger;
 
 public class LoginWindow {
 	protected Shell shell;
 	private WSWTApp app;
 	private WClientAppLogin applogin;
-	private MLogger log = MLogger.getLogger(this);
+	private WLogger log = WLogger.getLogger(this);
 	private Link link;
 	private Text text;
 
