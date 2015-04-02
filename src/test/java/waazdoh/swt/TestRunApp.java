@@ -9,7 +9,7 @@ import waazdoh.common.AppPreferences;
 import waazdoh.common.MTimedFlag;
 import waazdoh.common.WPreferences;
 import waazdoh.testing.MockBeanStorage;
-import waazdoh.testing.ServiceMock;
+import waazdoh.testing.StaticService;
 import waazdoh.testing.StaticTestPreferences;
 import waazdoh.testing.TestPBinarySource;
 
@@ -20,7 +20,7 @@ public class TestRunApp extends TestCase {
 		String username = prefix + System.currentTimeMillis();
 		WPreferences p = new StaticTestPreferences(prefix, username + "@ewew");
 		TestPBinarySource bsource = new TestPBinarySource(p);
-		ServiceMock nservice = new ServiceMock(username, bsource);
+		StaticService nservice = new StaticService(username);
 
 		WClient client = new WClient(p, bsource, new MockBeanStorage(),
 				nservice);

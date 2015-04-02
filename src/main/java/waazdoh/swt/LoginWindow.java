@@ -19,14 +19,13 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 import waazdoh.client.WClient;
-import waazdoh.client.WClientAppLogin;
-import waazdoh.common.MStringID;
 import waazdoh.common.WLogger;
+import waazdoh.common.vo.AppLoginVO;
 
 public class LoginWindow {
 	protected Shell shell;
 	private WSWTApp app;
-	private WClientAppLogin applogin;
+	private AppLoginVO applogin;
 	private WLogger log = WLogger.getLogger(this);
 	private Link link;
 	private Text text;
@@ -42,7 +41,7 @@ public class LoginWindow {
 	}
 
 	private String getURL() {
-		return getApplogin().getURL();
+		return getApplogin().getUrl();
 	}
 
 	/**
@@ -111,7 +110,7 @@ public class LoginWindow {
 			@Override
 			public void run() {
 				try {
-					if (app.getClient().getService().isLoggedIn()) {
+					if (app.getClient().isLoggedIn()) {
 						shell.dispose();
 					} else {
 						waitForLogin();
@@ -140,9 +139,9 @@ public class LoginWindow {
 
 	private void loop(WClient client) {
 		while (!shell.isDisposed()
-				&& (applogin == null || applogin.getSessionId() == null)) {
+				&& (applogin == null || applogin.getSessionid() == null)) {
 			try {
-				MStringID id = getApplogin().getId();
+				String id = getApplogin().getId();
 				applogin = client.checkAppLogin(id);
 				waitApp();
 			} catch (Exception e) {
@@ -172,7 +171,7 @@ public class LoginWindow {
 		}
 	}
 
-	public WClientAppLogin getApplogin() {
+	public AppLoginVO getApplogin() {
 		if (applogin == null) {
 			log.info("creating applogin " + app);
 			log.info("client:" + app.getClient());
