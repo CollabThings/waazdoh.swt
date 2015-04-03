@@ -183,7 +183,7 @@ public class LoginWindow {
 					link.setText("<a href=\"" + getURL()
 							+ "\">Open in a browser</a>");
 
-					String url = "" + getURL() + "?simplepage=true";
+					String url = "" + getURL() + applogin.getId();
 					log.info("opening url " + url);
 					text.setText(url);
 					//
