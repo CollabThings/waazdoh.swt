@@ -37,8 +37,8 @@ public final class AppPreferences implements WPreferences {
 
 	private void init(final String nprefix) {
 		String propertyprefix = System.getProperty("waazdoh.prefix");
-		String prefix = null;
-		if (nprefix == null || propertyprefix != null) {
+		String prefix = nprefix;
+		if (prefix == null || propertyprefix != null) {
 			prefix = propertyprefix;
 		}
 
@@ -91,8 +91,10 @@ public final class AppPreferences implements WPreferences {
 		}
 	}
 
-	public String get(final String name, String defaultvalue) {
-		if (p.get(name, null) == null && defaultvalue != null) {
+	public String get(final String name, final String ndefaultvalue) {
+		String defaultvalue = ndefaultvalue;
+
+		if (p.get(name, null) == null && ndefaultvalue != null) {
 			if (System.getProperty("waazdoh." + name) != null) {
 				defaultvalue = System.getProperty("waazdoh." + name);
 			}
