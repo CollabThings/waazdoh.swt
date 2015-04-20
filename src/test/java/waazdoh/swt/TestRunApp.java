@@ -5,7 +5,6 @@ import junit.framework.TestCase;
 import org.xml.sax.SAXException;
 
 import waazdoh.client.WClient;
-import waazdoh.common.AppPreferences;
 import waazdoh.common.MTimedFlag;
 import waazdoh.common.WPreferences;
 import waazdoh.testing.MockBeanStorage;
