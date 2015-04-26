@@ -53,10 +53,12 @@ public final class AppPreferences implements WPreferences {
 
 	private void loadValues() {
 		Properties values = getDefaultValues();
-		for (Object object : values.keySet()) {
-			String key = "" + object;
-			String value = values.getProperty(key);
-			p.put(key, value);
+		if (values != null) {
+			for (Object object : values.keySet()) {
+				String key = "" + object;
+				String value = values.getProperty(key);
+				p.put(key, value);
+			}
 		}
 	}
 
