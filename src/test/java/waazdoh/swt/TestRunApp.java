@@ -5,12 +5,13 @@ import junit.framework.TestCase;
 import org.xml.sax.SAXException;
 
 import waazdoh.client.WClient;
+import waazdoh.client.storage.local.FileBeanStorage;
 import waazdoh.common.MTimedFlag;
 import waazdoh.common.WPreferences;
+import waazdoh.cp2p.P2PBinarySource;
 import waazdoh.testing.MockBeanStorage;
 import waazdoh.testing.StaticService;
 import waazdoh.testing.StaticTestPreferences;
-import waazdoh.testing.TestPBinarySource;
 
 public class TestRunApp extends TestCase {
 
@@ -18,7 +19,8 @@ public class TestRunApp extends TestCase {
 		String prefix = "testrunappswt";
 		String username = prefix + System.currentTimeMillis();
 		WPreferences p = new StaticTestPreferences(prefix, username + "@ewew");
-		TestPBinarySource bsource = new TestPBinarySource(p);
+		P2PBinarySource bsource = new P2PBinarySource(p,
+				new FileBeanStorage(p), false);
 		StaticService nservice = new StaticService(username);
 
 		WClient client = new WClient(p, bsource, new MockBeanStorage(),
