@@ -68,7 +68,7 @@ public class LoginWindow {
 		shell = new Shell();
 		int w = 497;
 		int h = 329;
-		shell.setSize(430, 196);
+		shell.setSize(w, h);
 		shell.setText("Login");
 
 		Monitor primary = shell.getDisplay().getPrimaryMonitor();
