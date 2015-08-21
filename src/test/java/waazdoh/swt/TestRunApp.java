@@ -8,8 +8,8 @@ import waazdoh.client.WClient;
 import waazdoh.client.storage.local.FileBeanStorage;
 import waazdoh.common.MTimedFlag;
 import waazdoh.common.WPreferences;
+import waazdoh.common.client.MemoryBeanStorage;
 import waazdoh.cp2p.P2PBinarySource;
-import waazdoh.testing.MockBeanStorage;
 import waazdoh.testing.StaticService;
 import waazdoh.testing.StaticTestPreferences;
 
@@ -23,7 +23,7 @@ public class TestRunApp extends TestCase {
 				new FileBeanStorage(p), false);
 		StaticService nservice = new StaticService(username);
 
-		WClient client = new WClient(p, bsource, new MockBeanStorage(),
+		WClient client = new WClient(p, bsource, new MemoryBeanStorage(),
 				nservice);
 
 		MTimedFlag openwindowcalled = new MTimedFlag(20000);
