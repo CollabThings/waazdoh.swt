@@ -63,19 +63,20 @@ public final class AppPreferences implements WPreferences {
 	}
 
 	private Properties getDefaultValues() {
-		Properties p = new Properties();
+		Properties properties = new Properties();
 		try {
-			InputStream is = ClassLoader.getSystemResourceAsStream("properties.ini");
+			InputStream is = ClassLoader
+					.getSystemResourceAsStream("properties.ini");
 			if (is != null) {
-				p.load(is);
+				properties.load(is);
 			} else {
-				p.load(new FileReader("properties.ini"));
+				properties.load(new FileReader("properties.ini"));
 			}
-			return p;
 		} catch (IOException e) {
 			WLogger.getLogger(this).error(e);
-			return null;
 		}
+
+		return properties;
 	}
 
 	public Set<String> getNames() {
@@ -114,12 +115,15 @@ public final class AppPreferences implements WPreferences {
 		return Integer.parseInt(sint);
 	}
 
-	private String parse(final String name, String value) {
-		if (name.indexOf(".home.") > 0 && value != null && value.indexOf("/") != 0) {
-			value = System.getProperty("user.home") + File.separator + value;
+	private String parse(final String name, final String value) {
+		String returnvalue = value;
+		if (name.indexOf(".home.") > 0 && value != null
+				&& value.indexOf("/") != 0) {
+			returnvalue = System.getProperty("user.home") + File.separator
+					+ value;
 
 		}
-		return value;
+		return returnvalue;
 	}
 
 	public void set(final String name, String value) {
