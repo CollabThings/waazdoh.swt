@@ -13,4 +13,6 @@ public interface WSWTApp {
 
 	void openWindow();
 
+	boolean isClosed();
+
 }

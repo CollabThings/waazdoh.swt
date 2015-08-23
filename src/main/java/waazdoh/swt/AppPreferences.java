@@ -142,10 +142,6 @@ public final class AppPreferences implements WPreferences {
 
 	public double getDouble(String string, double d) {
 		String sdouble = get(string, "" + d);
-		if (sdouble != null) {
-			return Double.parseDouble(sdouble);
-		} else {
-			return 0;
-		}
+		return Double.parseDouble(sdouble);
 	}
 }
