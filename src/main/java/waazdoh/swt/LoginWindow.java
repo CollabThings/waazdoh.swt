@@ -180,18 +180,23 @@ public class LoginWindow {
 
 				@Override
 				public void run() {
-					link.setText("<a href=\"" + getURL()
-							+ "\">Open in a browser</a>");
+					if (!link.isDisposed()) {
+						link.setText("<a href=\"" + getURL()
+								+ "\">Open in a browser</a>");
 
-					String url = "" + getURL() + applogin.getId();
-					log.info("opening url " + url);
-					text.setText(url);
-					//
-					try {
-						Desktop.getDesktop().browse(new URI(url));
-					} catch (IOException | URISyntaxException e) {
-						log.error("getAppLogin failed to open browser " + url);
-						log.error(e);
+						String url = "" + getURL() + applogin.getId();
+						log.info("opening url " + url);
+						text.setText(url);
+						//
+						try {
+							Desktop.getDesktop().browse(new URI(url));
+						} catch (IOException | URISyntaxException e) {
+							log.error("getAppLogin failed to open browser "
+									+ url);
+							log.error(e);
+						}
+					} else {
+						log.info("Widget disposed");
 					}
 				}
 			});
