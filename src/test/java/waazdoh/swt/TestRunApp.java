@@ -9,9 +9,9 @@ import waazdoh.client.storage.local.FileBeanStorage;
 import waazdoh.common.MTimedFlag;
 import waazdoh.common.WPreferences;
 import waazdoh.common.client.MemoryBeanStorage;
+import waazdoh.common.testing.StaticService;
+import waazdoh.common.testing.StaticTestPreferences;
 import waazdoh.cp2p.P2PBinarySource;
-import waazdoh.testing.StaticService;
-import waazdoh.testing.StaticTestPreferences;
 
 public class TestRunApp extends TestCase {
 	private String prefix = "testrunappswt";
