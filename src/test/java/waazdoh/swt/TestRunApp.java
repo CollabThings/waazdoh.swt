@@ -82,8 +82,8 @@ public class TestRunApp extends TestCase {
 		openwindowcalled.waitTimer();
 
 		assertTrue(openwindowcalled.wasTriggerCalled());
-}
-	
+	}
+
 	private WPreferences getPreferences(String username) {
 		WPreferences p = new StaticTestPreferences(prefix, username + "@ewew");
 		return p;
@@ -108,7 +108,7 @@ public class TestRunApp extends TestCase {
 		WPreferences p = getPreferences(username);
 		P2PBinarySource bsource = getBinarySource(p);
 		nservice = new StaticService(username);
-		
+
 		WClient client = new WClient(p, bsource, new MemoryBeanStorage(),
 				nservice);
 		return client;
