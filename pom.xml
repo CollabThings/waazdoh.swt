@@ -6,8 +6,8 @@
 	<version>0.0.5-SNAPSHOT</version>
 	<name>waazdoh.swt</name>
 	<url>http://maven.apache.org</url>
-	<groupId>waazdoh</groupId>
-	<artifactId>waazdoh.swt</artifactId>
+	<groupId>org.waazdoh</groupId>
+	<artifactId>swt</artifactId>
 
 	<properties>
 		<exe.version>0.0.1.0</exe.version>
@@ -193,7 +193,7 @@
 		<dependency>
 			<groupId>waazdoh</groupId>
 			<artifactId>waazdoh.client</artifactId>
-			<version>[1.5.1-SNAPSHOT,)</version>
+			<version>[1.5.2-SNAPSHOT,)</version>
 		</dependency>
 
 		<dependency>
