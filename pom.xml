@@ -191,8 +191,8 @@
 		</dependency>
 
 		<dependency>
-			<groupId>waazdoh</groupId>
-			<artifactId>waazdoh.client</artifactId>
+			<groupId>org.waazdoh</groupId>
+			<artifactId>client</artifactId>
 			<version>[1.5.2-SNAPSHOT,)</version>
 		</dependency>
 
