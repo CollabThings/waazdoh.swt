@@ -34,9 +34,5 @@
   <classpathentry kind="var" path="M2_REPO/com/squareup/retrofit/retrofit/1.9.0/retrofit-1.9.0.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/google/guava/guava/19.0/guava-19.0.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/eclipse/swt/org.eclipse.swt.win32.win32.x86_64/4.3/org.eclipse.swt.win32.win32.x86_64-4.3.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/eclipse/jface/org.eclipse.jface/3.8.0.v20120521-2329/org.eclipse.jface-3.8.0.v20120521-2329.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/eclipse/equinox/org.eclipse.equinox.common/3.6.100.v20120522-1841/org.eclipse.equinox.common-3.6.100.v20120522-1841.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/eclipse/core/org.eclipse.core.commands/3.6.1.v20120521-2329/org.eclipse.core.commands-3.6.1.v20120521-2329.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/eclipse/osgi/org.eclipse.osgi/3.8.0.v20120529-1548/org.eclipse.osgi-3.8.0.v20120529-1548.jar"/>
   <classpathentry kind="lib" path="C:/Users/JVILMUNEN/oma/Kehitys/software/Java/jdk1.8.0_25_64/jre/lib/jfxswt.jar"/>
 </classpath>
