@@ -14,18 +14,17 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
-import java.util.prefs.BackingStoreException;
-import java.util.prefs.Preferences;
 
 import waazdoh.common.WLogger;
 import waazdoh.common.WPreferences;
+import waazdoh.common.util.PropertiesPreferences;
 
 public final class AppPreferences implements WPreferences {
-	private Preferences p;
+	private PropertiesPreferences p;
 	private WLogger log = WLogger.getLogger(this);
+	private Properties defaults;
 
 	public AppPreferences(String prefix) {
 		init(prefix);
@@ -43,30 +42,17 @@ public final class AppPreferences implements WPreferences {
 		}
 
 		if (prefix == null) {
-			prefix = "default";
+			prefix = "waazdoh/default";
 		}
 
-		p = Preferences.userRoot().node("waazdoh/" + prefix);
-
-		loadValues();
-	}
-
-	private void loadValues() {
-		Properties values = getDefaultValues();
-		if (values != null) {
-			for (Object object : values.keySet()) {
-				String key = "" + object;
-				String value = values.getProperty(key);
-				p.put(key, value);
-			}
-		}
+		p = new PropertiesPreferences(prefix);
+		defaults = getDefaultValues();
 	}
 
 	private Properties getDefaultValues() {
 		Properties properties = new Properties();
 		try {
-			InputStream is = ClassLoader
-					.getSystemResourceAsStream("properties.ini");
+			InputStream is = ClassLoader.getSystemResourceAsStream("properties.ini");
 			if (is != null) {
 				properties.load(is);
 			} else {
@@ -80,30 +66,19 @@ public final class AppPreferences implements WPreferences {
 	}
 
 	public Set<String> getNames() {
-		Set<String> ret = new HashSet<String>();
-		String[] keys;
-		try {
-			keys = p.keys();
-			for (final String string : keys) {
-				ret.add(string);
-			}
-			return ret;
-		} catch (BackingStoreException e) {
-			log.error(e);
-			return null;
-		}
+		return p.getNames();
 	}
 
 	public String get(final String name, final String ndefaultvalue) {
 		String defaultvalue = ndefaultvalue;
-
-		if (p.get(name, null) == null && ndefaultvalue != null) {
-			if (System.getProperty("waazdoh." + name) != null) {
-				defaultvalue = System.getProperty("waazdoh." + name);
-			}
-			//
-			set(name, defaultvalue);
+		if (defaults.get(name) != null) {
+			defaultvalue = "" + defaults.get(name);
 		}
+
+		if (System.getProperty("waazdoh." + name) != null) {
+			defaultvalue = System.getProperty("waazdoh." + name);
+		}
+
 		String parsed = parse(name, p.get(name, defaultvalue));
 
 		log.info("get " + name + " = " + parsed);
@@ -117,19 +92,15 @@ public final class AppPreferences implements WPreferences {
 
 	private String parse(final String name, final String value) {
 		String returnvalue = value;
-		if (name.indexOf(".home.") > 0 && value != null
-				&& value.indexOf("/") != 0) {
-			returnvalue = System.getProperty("user.home") + File.separator
-					+ value;
+		if (name.indexOf(".home.") > 0 && value != null && value.indexOf("/") != 0) {
+			returnvalue = System.getProperty("user.home") + File.separator + value;
 
 		}
 		return returnvalue;
 	}
 
 	public void set(final String name, String value) {
-		if (name != null && value != null) {
-			p.put(name, value);
-		}
+		p.set(name, value);
 	}
 
 	public void set(final String name, boolean b) {
@@ -137,11 +108,10 @@ public final class AppPreferences implements WPreferences {
 	}
 
 	public boolean getBoolean(final String valuename, boolean defaultvalue) {
-		return "true".equals("" + get(valuename, "" + defaultvalue));
+		return p.getBoolean(valuename, defaultvalue);
 	}
 
 	public double getDouble(String string, double d) {
-		String sdouble = get(string, "" + d);
-		return Double.parseDouble(sdouble);
+		return p.getDouble(string, d);
 	}
 }
