@@ -142,7 +142,7 @@ public class LoginWindow {
 				&& (applogin == null || applogin.getSessionid() == null)) {
 			try {
 				String id = getApplogin().getId();
-				applogin = client.checkAppLogin(id);
+				client.checkAppLogin(id);
 				waitApp();
 			} catch (Exception e) {
 				log.error(e);
