@@ -81,7 +81,7 @@ public final class AppPreferences implements WPreferences {
 
 		String parsed = parse(name, p.get(name, defaultvalue));
 
-		log.info("get " + name + " = " + parsed);
+		log.debug("get " + name + " = " + parsed);
 		return parsed;
 	}
 
