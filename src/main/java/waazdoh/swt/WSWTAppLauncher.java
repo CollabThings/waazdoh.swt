@@ -8,6 +8,7 @@ import java.net.URISyntaxException;
 import java.util.Iterator;
 import java.util.List;
 
+import waazdoh.client.utils.ThreadChecker;
 import waazdoh.common.WLogger;
 
 public class WSWTAppLauncher {
@@ -24,6 +25,8 @@ public class WSWTAppLauncher {
 			loginwindow = new LoginWindow(app);
 			loginwindow.open();
 
+			new ThreadChecker(() -> app.getClient().isRunning());
+
 			if (!app.getClient().isRunning()) {
 				app.close();
 			} else {
@@ -39,8 +42,7 @@ public class WSWTAppLauncher {
 		log.info("detecting proxies");
 		List<Proxy> l = null;
 		try {
-			l = ProxySelector.getDefault()
-					.select(new URI("http://waazdoh.com"));
+			l = ProxySelector.getDefault().select(new URI("http://waazdoh.com"));
 		} catch (URISyntaxException e) {
 			log.error(e);
 		}
@@ -57,8 +59,7 @@ public class WSWTAppLauncher {
 					log.info("proxy hostname : " + addr.getHostName());
 					System.setProperty("http.proxyHost", addr.getHostName());
 					log.info("proxy port : " + addr.getPort());
-					System.setProperty("http.proxyPort",
-							Integer.toString(addr.getPort()));
+					System.setProperty("http.proxyPort", Integer.toString(addr.getPort()));
 				}
 			}
 		}
