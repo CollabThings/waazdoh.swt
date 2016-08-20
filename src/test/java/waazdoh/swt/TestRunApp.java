@@ -69,7 +69,7 @@ public class TestRunApp extends TestCase {
 		assertTrue(openwindowcalled.wasTriggerCalled());
 	}
 
-	public void testAppLogin() {
+	public void disableTestAppLogin() {
 		WClient client = getNewClient();
 
 		MTimedFlag openwindowcalled = new MTimedFlag(20000);
