@@ -6,8 +6,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -86,12 +84,8 @@ public class LoginWindow {
 		lblTitle.setText("Click the link or copy URL to accept application");
 
 		link = new Link(shell, SWT.NONE);
-		link.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent arg0) {
-				loginLinkSelected();
-			}
-		});
+		link.addSelectionListener(new CTSelectionAdapter(e -> loginLinkSelected()));
+
 		link.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		link.setText("Working on it...");
 
@@ -132,14 +126,13 @@ public class LoginWindow {
 				}
 			}
 			//
-				dispose();
-			});
+			dispose();
+		});
 		t.start();
 	}
 
 	private void loop(WClient client) {
-		while (!shell.isDisposed()
-				&& (applogin == null || applogin.getSessionid() == null)) {
+		while (!shell.isDisposed() && (applogin == null || applogin.getSessionid() == null)) {
 			try {
 				String id = getApplogin().getId();
 				client.checkAppLogin(id);
@@ -181,8 +174,7 @@ public class LoginWindow {
 				@Override
 				public void run() {
 					if (!link.isDisposed()) {
-						link.setText("<a href=\"" + getURL()
-								+ "\">Open in a browser</a>");
+						link.setText("<a href=\"" + getURL() + "\">Open in a browser</a>");
 
 						String url = "" + getURL() + applogin.getId();
 						log.info("opening url " + url);
@@ -191,8 +183,7 @@ public class LoginWindow {
 						try {
 							Desktop.getDesktop().browse(new URI(url));
 						} catch (IOException | URISyntaxException e) {
-							log.error("getAppLogin failed to open browser "
-									+ url);
+							log.error("getAppLogin failed to open browser " + url);
 							log.error(e);
 						}
 					} else {
