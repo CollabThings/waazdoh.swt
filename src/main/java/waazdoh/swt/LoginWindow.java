@@ -90,29 +90,26 @@ public class LoginWindow {
 		link.setText("Working on it...");
 
 		text = new Text(shell, SWT.BORDER | SWT.MULTI);
-		GridData gd_text = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
-		gd_text.heightHint = 102;
-		text.setLayoutData(gd_text);
+		GridData gdtext = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
+		gdtext.heightHint = 102;
+		text.setLayoutData(gdtext);
 		//
 		startLoginCheck();
 		waitForLogin();
 	}
 
 	private void waitForLogin() {
-		shell.getDisplay().timerExec(1000, new Runnable() {
+		shell.getDisplay().timerExec(1000, () -> {
 
-			@Override
-			public void run() {
-				try {
-					if (app.getClient().isLoggedIn()) {
-						shell.dispose();
-					} else {
-						waitForLogin();
-					}
-				} catch (Exception e) {
-					log.error(e);
+			try {
+				if (app.getClient().isLoggedIn()) {
+					shell.dispose();
+				} else {
 					waitForLogin();
 				}
+			} catch (Exception e) {
+				log.error(e);
+				waitForLogin();
 			}
 		});
 	}
@@ -150,17 +147,14 @@ public class LoginWindow {
 				app.wait(2000);
 			} catch (InterruptedException e) {
 				log.error(e);
+				Thread.currentThread().interrupt();
 			}
 		}
 	}
 
 	public void dispose() {
 		if (!shell.isDisposed()) {
-			shell.getDisplay().asyncExec(new Runnable() {
-				public void run() {
-					shell.dispose();
-				}
-			});
+			shell.getDisplay().asyncExec(() -> shell.dispose());
 		}
 	}
 
@@ -169,30 +163,25 @@ public class LoginWindow {
 			log.info("creating applogin " + app);
 			log.info("client:" + app.getClient());
 			this.applogin = app.getClient().requestAppLogin();
-			shell.getDisplay().asyncExec(new Runnable() {
+			shell.getDisplay().asyncExec(() -> {
+				if (!link.isDisposed()) {
+					link.setText("<a href=\"" + getURL() + "\">Open in a browser</a>");
 
-				@Override
-				public void run() {
-					if (!link.isDisposed()) {
-						link.setText("<a href=\"" + getURL() + "\">Open in a browser</a>");
-
-						String url = "" + getURL() + applogin.getId();
-						log.info("opening url " + url);
-						text.setText(url);
-						//
-						try {
-							Desktop.getDesktop().browse(new URI(url));
-						} catch (IOException | URISyntaxException e) {
-							log.error("getAppLogin failed to open browser " + url);
-							log.error(e);
-						}
-					} else {
-						log.info("Widget disposed");
+					String url = "" + getURL() + applogin.getId();
+					log.info("opening url " + url);
+					text.setText(url);
+					//
+					try {
+						Desktop.getDesktop().browse(new URI(url));
+					} catch (IOException | URISyntaxException e) {
+						log.error("getAppLogin failed to open browser " + url);
+						log.error(e);
 					}
+				} else {
+					log.info("Widget disposed");
 				}
 			});
 		}
-		//
 		return applogin;
 	}
 }
