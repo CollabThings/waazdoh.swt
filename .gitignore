@@ -4,7 +4,6 @@ pom.xml.releaseBackup
 pom.xml.next
 release.properties
 /bin/
-/bin/
-/bin/
-/bin/
-/bin/
+.classpath
+.project
+.settings
