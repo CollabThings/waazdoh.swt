@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
@@ -7,7 +8,7 @@
 	<name>org.waazdoh.swt</name>
 	<url>http://maven.apache.org</url>
 	<groupId>org.waazdoh</groupId>
-	<artifactId>swt</artifactId>
+	<artifactId>waazdoh-swt</artifactId>
 
 	<properties>
 		<exe.version>0.0.1.0</exe.version>
@@ -192,22 +193,14 @@
 
 		<dependency>
 			<groupId>org.waazdoh</groupId>
-			<artifactId>client</artifactId>
-			<version>[1.5.2-RELEASE,)</version>
+			<artifactId>waazdoh-client</artifactId>
+			<version>[2.0.0-SNAPSHOT,)</version>
 		</dependency>
 
 		<dependency>
 			<groupId>${swt.groupId}</groupId>
 			<artifactId>${swt.artifactId}</artifactId>
 			<version>4.3</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.oracle</groupId>
-			<artifactId>javafx</artifactId>
-			<version>2.2.3</version>
-			<scope>system</scope>
-			<systemPath>${env.JAVA_HOME}/jre/lib/jfxswt.jar</systemPath>
 		</dependency>
 
 	</dependencies>
